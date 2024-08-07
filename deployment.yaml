@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-crm-deployment
+  labels:
+    app: demo-crm
+spec:
+  selector:
+    matchLabels:
+      app: demo-crm
+  template:
+    metadata:
+      labels:
+        app: demo-crm
+    spec:
+      imagePullSecrets:
+      - name: gitlab-registry-secret
+      containers:
+      - name: demo-crm-container
+        image: registry.gitlab.com/jenkins1444027/demo-crm:1.0
+        ports:
+        - containerPort: 3000
+        envFrom:
+        - configMapRef:
+            name: demo-crm-config
